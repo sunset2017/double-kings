@@ -18,20 +18,23 @@ class CsvFileWriter:
             print 'Data Type mis-match exception, required: DataType.SaleHistory'
             return
             
-        saleAmount = str(saleHistory.getSaleAmount())
+        saleAmount = saleHistory.getSaleAmount().encode('utf-8')
         product = saleHistory.getProduct()
             
-        productName = product.getProductName()
-        productPrice = product.getCurrentPrice()
-        productRating =product.getProductRating()
-        destination = product.getMainDestination()
+        productName = product.getProductName().encode('utf-8')
+        productPrice = product.getCurrentPrice().encode('utf-8')
+        productRating =product.getProductRating().encode('utf-8')
+        destination = product.getMainDestination().encode('utf-8')
         
-        print destination + ", "+ productName + ",  people: " + saleAmount + ",  price: " + productPrice + ",  score: " + productRating
+        #print destination + ", "+ productName + ",  people: " + saleAmount + ",  price: " + productPrice + ",  score: " + productRating
         #TODO: write data to .csv file
         
-#         self.__writer.writerow({
-#             'productName': productName,
-#             'saleAmount': saleAmount})
+        self.__writer.writerow({
+            'productName': productName,
+            'saleAmount': saleAmount,
+            'destination': destination,
+            'price': productPrice,
+            'rating': productRating})
     
     def initFileWriter(self):
         self.__csvfile = open(self.__filePath, 'a')
